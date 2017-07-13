@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GrabYourPhoto.iml" filepath="$PROJECT_DIR$/GrabYourPhoto.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gyp.iml" filepath="$PROJECT_DIR$/gyp.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GrabYourPhoto</string>
+    <string name="btn_link_to_register">Nie zarejestrowany? Zapisz się teraz.</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_logout">WYLOGUJ</string>
+    <string name="btn_register">ZAREJESTRUJ</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Hasło</string>
+    <string name="title_activity_login">Logowanie</string>
+    <string name="hint_zipcode">Kod pocztowy</string>
+    <string name="hint_telephone">Numer telefonu</string>
+    <string name="hint_surname">Nazwisko</string>
+    <string name="hint_street">Ulica</string>
+    <string name="hint_name">Imię</string>
+    <string name="hint_country">Państwo</string>
+    <string name="hint_confirm_password">Potwierdź hasło</string>
+    <string name="error_enter_email">Wprowadź adres e-mail</string>
+    <string name="error_enter_password">Wprowadź hasło</string>
+    <string name="error_wrong_email">Zły adres e-mail</string>
+    <string name="error_wrong_password">Złe hasło</string>
+    <string name="default_country">Polska</string>
+</resources>

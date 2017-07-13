@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">GrabYourPhoto</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm your password</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_surname">Surname</string>
+    <string name="hint_street">Street</string>
+    <string name="hint_zipcode">Zip code</string>
+    <string name="hint_country">Country</string>
+    <string name="hint_telephone">Telephone number</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_link_to_register">Not registered? Sign up now.</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="error_enter_email">Enter Your email address</string>
+    <string name="error_wrong_email">Wrong e-mail adress</string>
+    <string name="error_enter_password">Enter Your password</string>
+    <string name="error_wrong_password">Wrong password</string>
+    <string name="default_country">Poland</string>
+    <string name="error_empty_field">Enter data</string>
+
 </resources>
