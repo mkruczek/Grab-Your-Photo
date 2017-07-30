@@ -50,7 +50,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final String imageResources = images.get(position);
 
-        Glide.with(context).load("file://" + imageResources).override(700, 700).into(holder.imageViewSingleImage);
+        Glide.with(context).load("file://" + imageResources).override(350, 350).into(holder.imageViewSingleImage);
 
         holder.imageViewSingleImage.setOnClickListener(new View.OnClickListener() {
             @Override
