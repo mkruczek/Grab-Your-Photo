@@ -17,7 +17,7 @@ public final class ValidateData {
     }
 
     public static boolean validatePassword(String password) {
-        return password.length() > 9;
+        return password.length() > 6;
     }
 
     public static boolean validateEmail(String email) {
