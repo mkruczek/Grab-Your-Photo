@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     private boolean loginData = true;
     private static final String URL_FOR_LOGIN = "http://logapi.grabyourphotos.pl/login.php";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +33,6 @@ public class LoginActivity extends AppCompatActivity {
         emailLogin = (EditText) findViewById(R.id.emailLogin);
         passwordLogin = (EditText) findViewById(R.id.passwordLogin);
         progressDialog = new ProgressDialog(this);
-
-
     }
 
     public void toRegister(View view) {
@@ -102,7 +99,6 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
 

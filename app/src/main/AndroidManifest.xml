@@ -22,16 +22,18 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".UserActivity"/>
+        <activity android:name=".gallery.GalleryActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
             </intent-filter>
-        </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".UserActivity"/>
-        <activity android:name=".gallery.GalleryActivity">
-
-
         </activity>
     </application>
 

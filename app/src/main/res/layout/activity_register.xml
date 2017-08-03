@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/bg_login"
-    android:gravity="center"
-    android:orientation="vertical"
     android:padding="10dp">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -88,6 +87,18 @@
             android:textColorHint="@color/input_login_hint" />
 
         <EditText
+            android:id="@+id/telephoneRegister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/hint_telephone"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="@color/input_login"
+            android:textColorHint="@color/input_login_hint" />
+
+        <EditText
             android:id="@+id/zipcodeRegister"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -105,37 +116,59 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:text="@string/default_country"
             android:hint="@string/hint_country"
             android:inputType="text"
             android:padding="10dp"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint"
-            />
-
-        <EditText
-            android:id="@+id/telephoneRegister"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/hint_telephone"
-            android:inputType="number"
-            android:padding="10dp"
+            android:text="@string/default_country"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_login_hint" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="41dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <RadioGroup
+                android:id="@+id/gender_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <RadioButton
+                    android:id="@+id/male_radio_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:paddingRight="25dp"
+                    android:text="@string/gender_male"
+                    android:textColor="@color/input_login_hint"
+                    android:textSize="20dp" />
+
+                <RadioButton
+                    android:id="@+id/female_radio_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender_female"
+                    android:textColor="@color/input_login_hint"
+                    android:textSize="20dp" />
+            </RadioGroup>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="10dp"
             android:background="@color/btn_login_bg"
+            android:onClick="register"
             android:text="@string/btn_register"
-            android:textColor="@color/btn_login"
-            android:onClick="register"/>
+            android:textColor="@color/btn_login" />
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
 
