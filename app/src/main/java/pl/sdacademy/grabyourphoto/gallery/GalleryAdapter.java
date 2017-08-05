@@ -17,11 +17,18 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.greendao.database.Database;
+import org.greenrobot.greendao.query.DeleteQuery;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.sdacademy.grabyourphoto.R;
+import pl.sdacademy.grabyourphoto.gallery.db.DaoMaster;
+import pl.sdacademy.grabyourphoto.gallery.db.DaoSession;
+import pl.sdacademy.grabyourphoto.gallery.db.Image;
+import pl.sdacademy.grabyourphoto.gallery.db.ImageDao;
 
 /**
  * Created by mikr on 14/07/17.
@@ -29,10 +36,10 @@ import pl.sdacademy.grabyourphoto.R;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
 
-    private List<String> images;
+    private List<Image> images;
     private Context context;
 
-    public GalleryAdapter(List<String> images, Context context) {
+    public GalleryAdapter(List<Image> images, Context context) {
         this.images = images;
         this.context = context;
     }
@@ -48,7 +55,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final String imageResources = images.get(position);
+
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "users.db");
+        Database db = helper.getWritableDb();
+        final DaoSession daoSession = new DaoMaster(db).newSession();
+        final ImageDao imageDao = daoSession.getImageDao();
+
+        final String imageResources = images.get(position).getResources();
 
         Glide.with(context).load("file://" + imageResources).override(350, 350).into(holder.imageViewSingleImage);
 
@@ -60,6 +73,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
+                                DeleteQuery<Image> imageDeleteQuery = daoSession.queryBuilder(Image.class)
+                                        .where(ImageDao.Properties.Id.eq(images.get(position).getId()))
+                                        .buildDelete();
+                                imageDeleteQuery.executeDeleteWithoutDetachingEntities();
+                                daoSession.clear();
+
                                 images.remove(position);
                                 notifyDataSetChanged();
                             }

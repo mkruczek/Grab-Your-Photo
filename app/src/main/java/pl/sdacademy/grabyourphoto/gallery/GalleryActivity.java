@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -28,17 +29,24 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.greendao.database.Database;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import pl.sdacademy.grabyourphoto.R;
+import pl.sdacademy.grabyourphoto.gallery.db.DaoMaster;
+import pl.sdacademy.grabyourphoto.gallery.db.DaoSession;
+import pl.sdacademy.grabyourphoto.gallery.db.Image;
+import pl.sdacademy.grabyourphoto.gallery.db.ImageDao;
 
 public class GalleryActivity extends AppCompatActivity {
 
     public static final int RESULT_LOAD_IMAGE = 1;
 
+    private List<Image> imageList;
 
-    private ArrayList<String> list;
-
+    private Context context;
 
     private String resources;
     private RecyclerView recyclerView;
@@ -46,23 +54,31 @@ public class GalleryActivity extends AppCompatActivity {
     private static GalleryAdapter galleryAdapter;
     private FloatingActionButton fab;
 
+    private DaoSession daoSession;
+    private ImageDao imageDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        list = new ArrayList<>();
+        context = GalleryActivity.this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.imageRecyclerView);
+
+        DaoMaster.DevOpenHelper helperDB = new DaoMaster.DevOpenHelper(context, "users.db");
+        Database db = helperDB.getWritableDb();
+        daoSession = new DaoMaster(db).newSession();
+        imageDao = daoSession.getImageDao();
+        imageList = imageDao.queryBuilder().list();
 
 
         llm = new GridLayoutManager(GalleryActivity.this, 3);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), llm.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(llm);
-        galleryAdapter = new GalleryAdapter(list, GalleryActivity.this);
+        galleryAdapter = new GalleryAdapter(imageList, context);
         recyclerView.setAdapter(galleryAdapter);
 
         Intent intent = getIntent();
@@ -72,10 +88,12 @@ public class GalleryActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equals(action)) {
             if (extras.containsKey(Intent.EXTRA_STREAM)) {
                 Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-                resources = getRealPathFromURI(GalleryActivity.this, imageUri);
-                list.add(resources);
+                Image image = new Image();
+                image.setResources(getRealPathFromURI(context, imageUri));
+                imageDao.insert(image);
 
-                galleryAdapter.notifyDataSetChanged();
+                imageList = imageDao.queryBuilder().list();
+                recyclerView.setAdapter(new GalleryAdapter(imageList, context));
 
             }
         }
@@ -136,10 +154,12 @@ public class GalleryActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            String resources = picturePath;
-            list.add(resources);
+            Image image = new Image();
+            image.setResources(picturePath);
+            imageDao.insert(image);
 
-            galleryAdapter.notifyDataSetChanged();
+            imageList = imageDao.queryBuilder().list();
+            recyclerView.setAdapter(new GalleryAdapter(imageList, context));
         }
 
     }
