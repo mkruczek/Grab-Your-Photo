@@ -169,6 +169,7 @@ public class GalleryActivity extends AppCompatActivity {
         try {
             String[] allData = {MediaStore.Images.Media.DATA};
             cursor = context.getContentResolver().query(contentUri, allData, null, null, null);
+            assert cursor != null;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
