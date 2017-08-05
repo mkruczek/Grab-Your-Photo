@@ -20,4 +20,8 @@
     <string name="error_wrong_email">Zły adres e-mail</string>
     <string name="error_wrong_password">Złe hasło</string>
     <string name="default_country">Polska</string>
+    <string name="hint_gender">Płeć</string>
+    <string name="error_empty_field">Wprowadź dane</string>
+    <string name="gender_male">Mężczyzna</string>
+    <string name="gender_female">Kobieta</string>
 </resources>
