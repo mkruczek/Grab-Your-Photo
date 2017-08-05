@@ -54,7 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+        ValidateData.validZipCode(zipcodeRegister);
+        ValidateData.validPhoneNumber(telephoneRegister);
     }
+
 
     private void validatePassword() {
         if(!confirmPasswordRegister.getText().toString().equals(passwordRegister.getText().toString())){
