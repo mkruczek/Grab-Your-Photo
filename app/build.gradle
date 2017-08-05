@@ -28,6 +28,7 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:+'
     compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
     compile group: 'com.github.bumptech.glide', name: 'glide', version: '3.6.0'
     testCompile 'junit:junit:4.12'
 }
