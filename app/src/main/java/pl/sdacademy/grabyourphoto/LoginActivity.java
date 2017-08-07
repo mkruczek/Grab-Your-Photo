@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import pl.sdacademy.grabyourphoto.gallery.GalleryActivity;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailLogin;
@@ -37,6 +39,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void toRegister(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void toGallery(View view) {
+        Intent intent = new Intent(LoginActivity.this, GalleryActivity.class);
         startActivity(intent);
     }
 

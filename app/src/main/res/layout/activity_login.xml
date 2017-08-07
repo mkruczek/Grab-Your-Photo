@@ -65,6 +65,18 @@
             android:textSize="15dp"
             android:onClick="toRegister"/>
 
+        <Button
+            android:id="@+id/btnLinkToGalleryActivity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dip"
+            android:background="@null"
+            android:text="@string/btn_link_to_gallery"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:onClick="toGallery"/>
+
     </LinearLayout>
 
 </LinearLayout>
