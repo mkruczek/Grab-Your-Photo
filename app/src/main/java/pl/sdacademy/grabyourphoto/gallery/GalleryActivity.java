@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import org.greenrobot.greendao.database.Database;
 
 import java.util.List;
 
+import pl.sdacademy.grabyourphoto.Permission;
 import pl.sdacademy.grabyourphoto.R;
 import pl.sdacademy.grabyourphoto.gallery.db.DaoMaster;
 import pl.sdacademy.grabyourphoto.gallery.db.DaoSession;
@@ -46,6 +48,10 @@ public class GalleryActivity extends AppCompatActivity {
 
     private DaoSession daoSession;
     private ImageDao imageDao;
+
+    private Intent intent;
+    private Bundle extras;
+    private String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +76,11 @@ public class GalleryActivity extends AppCompatActivity {
         galleryAdapter = new GalleryAdapter(imageList, context);
         recyclerView.setAdapter(galleryAdapter);
 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        String action = intent.getAction();
+        intent = getIntent();
+        extras = intent.getExtras();
+        action = intent.getAction();
+
+
 
         if (Intent.ACTION_SEND.equals(action)) {
             if (extras.containsKey(Intent.EXTRA_STREAM)) {
@@ -81,7 +89,7 @@ public class GalleryActivity extends AppCompatActivity {
                 image.setResources(getRealPathFromURI(context, imageUri));
                 imageDao.insert(image);
 
-                Toast.makeText(context, "You picked 1 Images",Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "You picked 1 Images", Toast.LENGTH_LONG).show();
 
                 imageList = imageDao.queryBuilder().list();
                 recyclerView.setAdapter(new GalleryAdapter(imageList, context));
@@ -107,46 +115,30 @@ public class GalleryActivity extends AppCompatActivity {
             recyclerView.setAdapter(new GalleryAdapter(imageList, context));
         }
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (ActivityCompat.checkSelfPermission(GalleryActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    if ((ActivityCompat.shouldShowRequestPermissionRationale(GalleryActivity.this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE))) {
-                        showExplanation("Potrzebujemy pozwolenia", "Daj je nam bym załadować foto",
-                                Manifest.permission.READ_EXTERNAL_STORAGE, PICK_IMAGE);
-                    } else {
-                        requestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, PICK_IMAGE);
-                    }
-                } else {
+//                if (ActivityCompat.checkSelfPermission(GalleryActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                    if ((ActivityCompat.shouldShowRequestPermissionRationale(GalleryActivity.this,
+//                            Manifest.permission.READ_EXTERNAL_STORAGE))) {
+//                        Permission.showExplanation("Potrzebujemy pozwolenia", "Daj je nam bym załadować foto",
+//                                Manifest.permission.READ_EXTERNAL_STORAGE, PICK_IMAGE);
+//                    } else {
+//                        Permission.requestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, PICK_IMAGE);
+//                    }
+//                } else {}
                     Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                     i.setType("image/*");
                     i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     startActivityForResult(i, PICK_IMAGE);
-                }
+
             }
         });
     }
 
-    private void requestPermissions(String permissionName, int permissionRequestCode) {
-        ActivityCompat.requestPermissions(this, new String[]{permissionName}, permissionRequestCode);
-    }
 
-
-    private void showExplanation(String title, String message, final String permission, final int permissionRequestCode) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                requestPermissions(permission, permissionRequestCode);
-            }
-        });
-        builder.show();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,6 +184,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     }
 
+
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -207,5 +200,6 @@ public class GalleryActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

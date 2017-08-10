@@ -1,5 +1,6 @@
 package pl.sdacademy.grabyourphoto;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import pl.sdacademy.grabyourphoto.gallery.GalleryActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    Activity activity = LoginActivity.this;
+
     private EditText emailLogin;
     private EditText passwordLogin;
     private ProgressDialog progressDialog;
@@ -32,18 +35,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Permission.checkPermissions(activity);
+
         emailLogin = (EditText) findViewById(R.id.emailLogin);
         passwordLogin = (EditText) findViewById(R.id.passwordLogin);
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(activity);
     }
 
     public void toRegister(View view) {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        Intent intent = new Intent(activity, RegisterActivity.class);
         startActivity(intent);
     }
 
     public void toGallery(View view) {
-        Intent intent = new Intent(LoginActivity.this, GalleryActivity.class);
+        Intent intent = new Intent(activity, GalleryActivity.class);
         startActivity(intent);
     }
 
@@ -92,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         String user = jObj.getJSONObject("user").getString("name");
                         // Launch User activity
                         Intent intent = new Intent(
-                                LoginActivity.this,
+                                activity,
                                 UserActivity.class);
                         intent.putExtra("username", user);
                         startActivity(intent);
@@ -100,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
 
                         String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
+                        Toast.makeText(activity,
                                 errorMsg, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -111,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),
+                Toast.makeText(activity,
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
             }
@@ -128,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
         };
         // Adding request to request queue
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq,cancel_req_tag);
+        AppSingleton.getInstance(activity).addToRequestQueue(strReq,cancel_req_tag);
     }
 
     private void showDialog() {
